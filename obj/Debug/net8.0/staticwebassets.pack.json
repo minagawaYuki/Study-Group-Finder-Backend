@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.StudyGroupFinder.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.StudyGroupFinder.props",
+      "PackagePath": "build\\StudyGroupFinder.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.StudyGroupFinder.props",
+      "PackagePath": "buildMultiTargeting\\StudyGroupFinder.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.StudyGroupFinder.props",
+      "PackagePath": "buildTransitive\\StudyGroupFinder.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

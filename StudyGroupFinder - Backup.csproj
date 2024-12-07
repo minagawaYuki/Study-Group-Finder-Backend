@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="NewFolder1\**" />
+    <Compile Remove="NewFolder3\**" />
+    <Compile Remove="NewFolder\**" />
+    <Content Remove="NewFolder1\**" />
+    <Content Remove="NewFolder3\**" />
+    <Content Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder1\**" />
+    <EmbeddedResource Remove="NewFolder3\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder1\**" />
+    <None Remove="NewFolder3\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_GlobalJsonStartingDir Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_GlobalJsonStartingDir Remove="NewFolder1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_GlobalJsonStartingDir Remove="NewFolder3\**" />
+  </ItemGroup>
+
+</Project>
