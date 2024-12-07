@@ -172,3 +172,4 @@ C:\Users\Mark\source\repos\StudyGroupFinder\bin\Debug\net8.0\Microsoft.AspNetCor
 C:\Users\Mark\source\repos\StudyGroupFinder\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\Mark\source\repos\StudyGroupFinder\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\Mark\source\repos\StudyGroupFinder\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\Mark\source\repos\StudyGroupFinder\obj\Debug\net8.0\StudyGroupFinder.sourcelink.json

@@ -32,7 +32,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins", builder =>
-        builder.WithOrigins("https://localhost:7034", "http://127.0.0.1:5500")  // Allow both backend and frontend URLs
+        builder.WithOrigins("https://localhost:7034", "http://127.0.0.1:5500", "http://127.0.0.1:5501")  // Allow both backend and frontend URLs
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials());  // Allow credentials (cookies, authorization headers, etc.)
