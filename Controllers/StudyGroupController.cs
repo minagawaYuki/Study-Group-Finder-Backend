@@ -111,4 +111,85 @@ public class StudyGroupController : ControllerBase
 
         return BadRequest(new { Message = "Failed to join the study group. The group might not exist or you may already be a member." });
     }
+
+    [Authorize]
+    [HttpPost("leave/{groupId}")]
+    public async Task<IActionResult> LeaveGroup(int groupId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the authenticated user's ID
+
+        // Find the study group by ID
+        var studyGroup = await _context.StudyGroups
+                                        .Include(g => g.Members)
+                                        .ThenInclude(m => m.User)
+                                        .FirstOrDefaultAsync(g => g.Id == groupId);
+
+        if (studyGroup == null)
+        {
+            return NotFound(new { message = "Study group not found." });
+        }
+
+        // Find the user in the group
+        var groupMember = studyGroup.Members.FirstOrDefault(m => m.UserId == userId);
+
+        if (groupMember == null)
+        {
+            return BadRequest(new { message = "You are not a member of this group." });
+        }
+
+        // Remove the user from the group
+        studyGroup.Members.Remove(groupMember);
+
+        // Save the changes to the database
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "You have successfully left the group." });
+    }
+
+    // GET: api/studygroup/joined
+    [HttpGet("joined")]
+    [Authorize] // Ensure the user is authenticated
+    public async Task<ActionResult> GetUserJoinedGroups()
+    {
+        // Get the UserId from the JWT token claim
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
+        {
+            return Unauthorized("User is not authenticated.");
+        }
+
+        var joinedGroups = await _context.GroupMembers
+            .Where(gm => gm.UserId == userId) // Filter by the current user
+            .Include(gm => gm.StudyGroup) // Include the related StudyGroup
+            .Select(gm => new
+            {
+                gm.StudyGroup.Id,
+                gm.StudyGroup.Name,
+                gm.StudyGroup.Description,
+                gm.StudyGroup.Subject,
+                gm.StudyGroup.CourseCode,
+                gm.StudyGroup.CreatedAt
+            })
+            .ToListAsync();
+
+        if (joinedGroups == null || !joinedGroups.Any())
+        {
+            return NotFound("No study groups found for this user.");
+        }
+
+        return Ok(joinedGroups);
+    }
+
+    // Controller action to check if the user is a member of a study group
+    [HttpGet("IsUserMember/{groupId}")]
+    public async Task<IActionResult> IsUserMember(int groupId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the logged-in user's ID
+        var isMember = await _context.GroupMembers
+                                     .AnyAsync(gm => gm.UserId == userId && gm.StudyGroupId == groupId);
+
+        return Ok(isMember);
+    }
+
 }

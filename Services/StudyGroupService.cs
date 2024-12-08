@@ -90,5 +90,6 @@ namespace StudyGroupFinder.Services
 
             return result > 0;
         }
+
     }
 }
