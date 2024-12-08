@@ -138,6 +138,64 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "StudyGroupController",
+    "Method": "GetAllStudyGroups",
+    "RelativePath": "api/StudyGroup/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
+    "Method": "CreateGroup",
+    "RelativePath": "api/StudyGroup/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "StudyGroupFinder.DTO.StudyGroupDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
+    "Method": "GetGroupDetails",
+    "RelativePath": "api/StudyGroup/details/{groupId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
+    "Method": "JoinGroup",
+    "RelativePath": "api/StudyGroup/join/{groupId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "StudyGroupFinder.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",

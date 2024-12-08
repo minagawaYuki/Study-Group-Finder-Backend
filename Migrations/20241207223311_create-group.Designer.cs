@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudyGroupFinder;
 
@@ -11,9 +12,11 @@ using StudyGroupFinder;
 namespace StudyGroupFinder.Migrations
 {
     [DbContext(typeof(StudyGroupFinderDbContext))]
-    partial class StudyGroupFinderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207223311_create-group")]
+    partial class creategroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,6 +178,7 @@ namespace StudyGroupFinder.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -358,6 +362,7 @@ namespace StudyGroupFinder.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CreatedByUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
