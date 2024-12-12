@@ -139,12 +139,70 @@
   },
   {
     "ContainingType": "StudyGroupController",
+    "Method": "PostAnnouncement",
+    "RelativePath": "api/StudyGroup/{groupId}/announcements",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "content",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
+    "Method": "GetAnnouncements",
+    "RelativePath": "api/StudyGroup/{groupId}/announcements",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
     "Method": "GetAllStudyGroups",
     "RelativePath": "api/StudyGroup/all",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
+    "Method": "PostComment",
+    "RelativePath": "api/StudyGroup/announcements/{announcementId}/comments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "announcementId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "content",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

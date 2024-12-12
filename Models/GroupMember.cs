@@ -10,3 +10,4 @@
         public DateTime JoinedAt { get; set; }
     }
 }
+    

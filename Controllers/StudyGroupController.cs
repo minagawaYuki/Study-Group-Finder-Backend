@@ -192,4 +192,76 @@ public class StudyGroupController : ControllerBase
         return Ok(isMember);
     }
 
+    // Endpoint to post an announcement (Group Owner only)
+    [HttpPost("{groupId}/announcements")]
+    [Authorize]
+    public async Task<IActionResult> PostAnnouncement(int groupId, [FromBody] string content)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var group = await _context.StudyGroups.Include(g => g.Members)
+            .FirstOrDefaultAsync(g => g.Id == groupId);
+
+        if (group == null)
+            return NotFound("Group not found.");
+
+        if (group.CreatedByUserId != userId)
+            return StatusCode(StatusCodes.Status403Forbidden, "Only group owners can post announcements.");
+
+        var announcement = new Announcement
+        {
+            StudyGroupId = groupId,
+            Content = content,
+            CreatedByUserId = userId,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Announcements.Add(announcement);
+        await _context.SaveChangesAsync();
+
+        return Ok(announcement);
+    }
+
+    // Endpoint to comment on an announcement (Members only)
+    [HttpPost("announcements/{announcementId}/comments")]
+    [Authorize]
+    public async Task<IActionResult> PostComment(int announcementId, [FromBody] string content)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var announcement = await _context.Announcements.Include(a => a.StudyGroup)
+            .ThenInclude(g => g.Members)
+            .FirstOrDefaultAsync(a => a.Id == announcementId);
+
+        if (announcement == null)
+            return NotFound("Announcement not found.");
+
+        var isMember = announcement.StudyGroup.Members.Any(m => m.UserId == userId);
+        if (!isMember)
+            return StatusCode(StatusCodes.Status403Forbidden, "Only group members can comment.");
+
+        var comment = new Comment
+        {
+            AnnouncementId = announcementId,
+            Content = content,
+            CreatedByUserId = userId,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Comments.Add(comment);
+        await _context.SaveChangesAsync();
+
+        return Ok(comment);
+    }
+
+
+    // Endpoint to get announcements and their comments for a group
+    [HttpGet("{groupId}/announcements")]
+    public async Task<IActionResult> GetAnnouncements(int groupId)
+    {
+        var announcements = await _context.Announcements
+            .Where(a => a.StudyGroupId == groupId)
+            .Include(a => a.Comments)
+            .ToListAsync();
+
+        return Ok(announcements);
+    }
 }

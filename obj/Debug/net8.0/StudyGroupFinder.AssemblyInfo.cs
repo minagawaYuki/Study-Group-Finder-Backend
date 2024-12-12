@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StudyGroupFinder")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71278c9920ee3e81bc49c946020b6a31bea02278")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8103a206e20fb917232077c7476f30294f890cbb")]
 [assembly: System.Reflection.AssemblyProductAttribute("StudyGroupFinder")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StudyGroupFinder")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
