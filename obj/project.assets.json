@@ -5045,19 +5045,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Mark\\.nuget\\packages\\": {}
+    "C:\\Users\\pcx\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\StudyGroupFinder.csproj",
+      "projectUniqueName": "C:\\Users\\pcx\\Documents\\SCHOOL 3RD YEAR\\CSIT321\\APP-DEV\\StudyGroupFinder.csproj",
       "projectName": "StudyGroupFinder",
-      "projectPath": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\StudyGroupFinder.csproj",
-      "packagesPath": "C:\\Users\\Mark\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\obj\\",
+      "projectPath": "C:\\Users\\pcx\\Documents\\SCHOOL 3RD YEAR\\CSIT321\\APP-DEV\\StudyGroupFinder.csproj",
+      "packagesPath": "C:\\Users\\pcx\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\pcx\\Documents\\SCHOOL 3RD YEAR\\CSIT321\\APP-DEV\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Mark\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pcx\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

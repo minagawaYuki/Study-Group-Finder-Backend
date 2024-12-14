@@ -20,4 +20,10 @@ namespace StudyGroupFinder.DTO
         [MaxLength(20)]
         public string CourseCode { get; set; }
     }
+
+    public class UpdateProfileDto
+    {
+        public string? FullName { get; set; }
+        public string? Bio { get; set; }
+    }
 }

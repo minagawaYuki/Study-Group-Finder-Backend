@@ -112,6 +112,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ProfileController",
+    "Method": "GetProfile",
+    "RelativePath": "api/Profile/get-profile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ProfileController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/Profile/update-profile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "profileDto",
+        "Type": "StudyGroupFinder.DTO.UpdateProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "StudyGroupFinder.Controllers.SellersController",
     "Method": "GetSellers",
     "RelativePath": "api/sellers",
