@@ -15,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<ISellerInfoService, SellerInfoService>();
 builder.Services.AddScoped<ISellerInfoRepository, SellerInfoRepository>();
 builder.Services.AddScoped<IStudyGroupService, StudyGroupService>();
+builder.Services.AddScoped<IStudyGoalRepository, StudyGoalRepository>();
+builder.Services.AddScoped<IStudyGoalService, StudyGoalService>();
 
 // Configure DbContext for Entity Framework with SQL Server
 builder.Services.AddDbContext<StudyGroupFinderDbContext>(db =>

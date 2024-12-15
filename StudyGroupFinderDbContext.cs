@@ -18,6 +18,7 @@ namespace StudyGroupFinder
         public DbSet<SessionParticipant> SessionParticipants { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<StudyGoal> StudyGoals { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); // Ensure this is called first
