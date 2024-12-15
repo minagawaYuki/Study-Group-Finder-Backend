@@ -139,6 +139,22 @@
   },
   {
     "ContainingType": "StudyGroupController",
+    "Method": "DeleteStudyGroup",
+    "RelativePath": "api/StudyGroup/{groupId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
     "Method": "PostAnnouncement",
     "RelativePath": "api/StudyGroup/{groupId}/announcements",
     "HttpMethod": "POST",
@@ -151,8 +167,8 @@
         "IsRequired": true
       },
       {
-        "Name": "content",
-        "Type": "System.String",
+        "Name": "dto",
+        "Type": "StudyGroupFinder.DTO.PostAnnouncementDto",
         "IsRequired": true
       }
     ],
@@ -239,9 +255,9 @@
   },
   {
     "ContainingType": "StudyGroupController",
-    "Method": "IsUserMember",
-    "RelativePath": "api/StudyGroup/IsUserMember/{groupId}",
-    "HttpMethod": "GET",
+    "Method": "JoinGroup",
+    "RelativePath": "api/StudyGroup/group/members/{groupId}",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -255,9 +271,25 @@
   },
   {
     "ContainingType": "StudyGroupController",
-    "Method": "JoinGroup",
-    "RelativePath": "api/StudyGroup/join/{groupId}",
-    "HttpMethod": "POST",
+    "Method": "LeaveGroup",
+    "RelativePath": "api/StudyGroup/group/members/{groupId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
+    "Method": "IsUserMember",
+    "RelativePath": "api/StudyGroup/IsUserMember/{groupId}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -277,22 +309,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "StudyGroupController",
-    "Method": "LeaveGroup",
-    "RelativePath": "api/StudyGroup/leave/{groupId}",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "groupId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
     "ReturnTypes": []
   },
   {

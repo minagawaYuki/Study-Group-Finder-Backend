@@ -33,6 +33,32 @@ public class StudyGroupController : ControllerBase
         return Ok(studyGroups);
     }
 
+    [HttpDelete("{groupId}")]
+    public async Task<IActionResult> DeleteStudyGroup(int groupId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        // Fetch the study group, including its members and related entities if necessary
+        var group = await _context.StudyGroups
+            .Include(g => g.Members)
+            .FirstOrDefaultAsync(g => g.Id == groupId);
+
+        if (group == null)
+            return NotFound("Study group not found.");
+
+        // Check if the current user is the creator of the group
+        if (group.CreatedByUserId != userId)
+            return Forbid("You are not authorized to delete this study group.");
+
+        // Remove the group
+        _context.StudyGroups.Remove(group);
+
+        // Save changes to the database
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "Study group deleted successfully." });
+    }
+
     [HttpGet("details/{groupId}")]
     public async Task<IActionResult> GetGroupDetails(int groupId)
     {
@@ -98,52 +124,62 @@ public class StudyGroupController : ControllerBase
 
 
 
-    [HttpPost("join/{groupId}")]
+    [Authorize]
+    [HttpPost("group/members/{groupId}")]
     public async Task<IActionResult> JoinGroup(int groupId)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userId == null) return Unauthorized(new { Message = "Unauthorized access" });
+        if (userId == null)
+            return Unauthorized(new { Message = "Unauthorized access" });
 
         var result = await _studyGroupService.JoinGroupAsync(groupId, userId);
 
         if (result)
             return Ok(new { Message = "Successfully joined the study group" });
 
-        return BadRequest(new { Message = "Failed to join the study group. The group might not exist or you may already be a member." });
+        return BadRequest(new { Message = "Failed to join the study group. The group might not exist, or you may already be a member." });
     }
 
     [Authorize]
-    [HttpPost("leave/{groupId}")]
+    [HttpDelete("group/members/{groupId}")]
     public async Task<IActionResult> LeaveGroup(int groupId)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the authenticated user's ID
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        // Find the study group by ID
+        // Fetch the study group along with its members
         var studyGroup = await _context.StudyGroups
                                         .Include(g => g.Members)
-                                        .ThenInclude(m => m.User)
                                         .FirstOrDefaultAsync(g => g.Id == groupId);
 
         if (studyGroup == null)
-        {
-            return NotFound(new { message = "Study group not found." });
-        }
+            return NotFound(new { Message = "Study group not found." });
 
-        // Find the user in the group
+        // Check if the user is a member of the group
         var groupMember = studyGroup.Members.FirstOrDefault(m => m.UserId == userId);
-
         if (groupMember == null)
+            return BadRequest(new { Message = "You are not a member of this group." });
+
+        // Check if the user is the group owner
+        if (studyGroup.CreatedByUserId == userId)
         {
-            return BadRequest(new { message = "You are not a member of this group." });
+            // Delete the group if the owner leaves
+            _context.StudyGroups.Remove(studyGroup);
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            return Ok(new { Message = "As the owner, you have left and the group has been deleted." });
         }
+        else
+        {
+            // Remove the user from the group
+            studyGroup.Members.Remove(groupMember);
 
-        // Remove the user from the group
-        studyGroup.Members.Remove(groupMember);
+            // Save changes to the database
+            await _context.SaveChangesAsync();
 
-        // Save the changes to the database
-        await _context.SaveChangesAsync();
-
-        return Ok(new { message = "You have successfully left the group." });
+            return Ok(new { Message = "You have successfully left the group." });
+        }
     }
 
     // GET: api/studygroup/joined
@@ -194,9 +230,11 @@ public class StudyGroupController : ControllerBase
 
     // Endpoint to post an announcement (Group Owner only)
     [HttpPost("{groupId}/announcements")]
-    [Authorize]
-    public async Task<IActionResult> PostAnnouncement(int groupId, [FromBody] string content)
+    public async Task<IActionResult> PostAnnouncement(int groupId, [FromBody] PostAnnouncementDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Content))
+            return BadRequest("Content cannot be empty.");
+
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var group = await _context.StudyGroups.Include(g => g.Members)
             .FirstOrDefaultAsync(g => g.Id == groupId);
@@ -210,7 +248,7 @@ public class StudyGroupController : ControllerBase
         var announcement = new Announcement
         {
             StudyGroupId = groupId,
-            Content = content,
+            Content = dto.Content,
             CreatedByUserId = userId,
             CreatedAt = DateTime.UtcNow
         };
@@ -253,13 +291,33 @@ public class StudyGroupController : ControllerBase
     }
 
 
-    // Endpoint to get announcements and their comments for a group
     [HttpGet("{groupId}/announcements")]
     public async Task<IActionResult> GetAnnouncements(int groupId)
     {
         var announcements = await _context.Announcements
             .Where(a => a.StudyGroupId == groupId)
             .Include(a => a.Comments)
+            .Select(a => new
+            {
+                a.Id,
+                a.Content,
+                a.CreatedAt,
+                CreatedBy = _context.Users
+                    .Where(u => u.Id == a.CreatedByUserId)
+                    .Select(u => u.Email)
+                    .FirstOrDefault(), // Fetch the user's email
+                a.StudyGroupId,
+                Comments = a.Comments.Select(c => new
+                {
+                    c.Id,
+                    c.Content,
+                    c.CreatedAt,
+                    CreatedBy = _context.Users
+                        .Where(u => u.Id == c.CreatedByUserId)
+                        .Select(u => u.Email)
+                        .FirstOrDefault() // Fetch email for comment authors
+                })
+            })
             .ToListAsync();
 
         return Ok(announcements);
