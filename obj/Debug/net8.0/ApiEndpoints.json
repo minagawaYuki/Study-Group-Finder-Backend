@@ -240,8 +240,8 @@
         "IsRequired": true
       },
       {
-        "Name": "content",
-        "Type": "System.String",
+        "Name": "dto",
+        "Type": "StudyGroupFinder.DTO.PostCommentDto",
         "IsRequired": true
       }
     ],

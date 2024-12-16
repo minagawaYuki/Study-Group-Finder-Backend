@@ -262,11 +262,15 @@ public class StudyGroupController : ControllerBase
     // Endpoint to comment on an announcement (Members only)
     [HttpPost("announcements/{announcementId}/comments")]
     [Authorize]
-    public async Task<IActionResult> PostComment(int announcementId, [FromBody] string content)
+    public async Task<IActionResult> PostComment(int announcementId, [FromBody] PostCommentDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Content))
+            return BadRequest("Comment cannot be empty.");
+
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var announcement = await _context.Announcements.Include(a => a.StudyGroup)
-            .ThenInclude(g => g.Members)
+        var announcement = await _context.Announcements
+            .Include(a => a.StudyGroup)
+                .ThenInclude(g => g.Members)
             .FirstOrDefaultAsync(a => a.Id == announcementId);
 
         if (announcement == null)
@@ -279,7 +283,7 @@ public class StudyGroupController : ControllerBase
         var comment = new Comment
         {
             AnnouncementId = announcementId,
-            Content = content,
+            Content = dto.Content,
             CreatedByUserId = userId,
             CreatedAt = DateTime.UtcNow
         };
@@ -287,7 +291,16 @@ public class StudyGroupController : ControllerBase
         _context.Comments.Add(comment);
         await _context.SaveChangesAsync();
 
-        return Ok(comment);
+        return Ok(new
+        {
+            comment.Id,
+            comment.Content,
+            comment.CreatedAt,
+            CreatedBy = await _context.Users
+                .Where(u => u.Id == comment.CreatedByUserId)
+                .Select(u => u.Email)
+                .FirstOrDefaultAsync()
+        });
     }
 
 
