@@ -181,6 +181,27 @@
   },
   {
     "ContainingType": "StudyGroupController",
+    "Method": "EditGroup",
+    "RelativePath": "api/StudyGroup/{groupId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "editGroupDto",
+        "Type": "StudyGroupFinder.DTO.StudyGroupDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
     "Method": "PostAnnouncement",
     "RelativePath": "api/StudyGroup/{groupId}/announcements",
     "HttpMethod": "POST",

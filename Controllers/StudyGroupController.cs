@@ -1,4 +1,4 @@
-﻿ using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudyGroupFinder;
@@ -44,11 +44,11 @@ public class StudyGroupController : ControllerBase
             .FirstOrDefaultAsync(g => g.Id == groupId);
 
         if (group == null)
-            return NotFound("Study group not found.");
+            return NotFound(new { message = "Study group not found." });
 
         // Check if the current user is the creator of the group
         if (group.CreatedByUserId != userId)
-            return Forbid("You are not authorized to delete this study group.");
+            return StatusCode(StatusCodes.Status403Forbidden, new { message = "You are not authorized to delete this study group." });
 
         // Remove the group
         _context.StudyGroups.Remove(group);
@@ -57,6 +57,30 @@ public class StudyGroupController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok(new { message = "Study group deleted successfully." });
+    }
+
+    // Edit Study Group
+    [HttpPut("{groupId}")]
+    public async Task<IActionResult> EditGroup(int groupId, [FromBody] StudyGroupDto editGroupDto)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        // Fetch the group and verify ownership
+        var group = await _context.StudyGroups.FirstOrDefaultAsync(g => g.Id == groupId);
+        if (group == null)
+            return NotFound("Group not found.");
+
+        if (group.CreatedByUserId != userId)
+            return Forbid(); // Forbid doesn't accept an anonymous object, so remove the custom message
+
+        // Update group properties
+        group.Name = editGroupDto.Name;
+        group.Description = editGroupDto.Description;
+        group.Subject = editGroupDto.Subject;
+        group.CourseCode = editGroupDto.CourseCode;
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Message = "Group updated successfully." });
     }
 
     [HttpGet("details/{groupId}")]
@@ -302,6 +326,8 @@ public class StudyGroupController : ControllerBase
 
         return Ok(new { message = "Announcement deleted successfully." });
     }
+
+
 
     // Endpoint to comment on an announcement (Members only)
     [HttpPost("announcements/{announcementId}/comments")]
