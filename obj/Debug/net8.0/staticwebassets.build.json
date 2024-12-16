@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9HdSGjaePUiFOlGCP9P+WkVMekEdNkwmEuAEAmX20Xc=",
+  "Hash": "Yu30osQ0WTYmIliwHRILGWb0IwLm5hr+BRbT4Q1NA/w=",
   "Source": "StudyGroupFinder",
   "BasePath": "_content/StudyGroupFinder",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "StudyGroupFinder\\wwwroot",
       "Source": "StudyGroupFinder",
-      "ContentRoot": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\pcx\\Documents\\SCHOOL 3RD YEAR\\CSIT321\\APP-DEV\\wwwroot\\",
       "BasePath": "_content/StudyGroupFinder",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\wwwroot\\index.html",
+      "Identity": "C:\\Users\\pcx\\Documents\\SCHOOL 3RD YEAR\\CSIT321\\APP-DEV\\wwwroot\\index.html",
       "SourceId": "StudyGroupFinder",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\pcx\\Documents\\SCHOOL 3RD YEAR\\CSIT321\\APP-DEV\\wwwroot\\",
       "BasePath": "_content/StudyGroupFinder",
       "RelativePath": "index.html",
       "AssetKind": "All",

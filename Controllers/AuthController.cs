@@ -35,12 +35,33 @@ namespace StudyGroupFinder.Controllers
                 return BadRequest(new { message = "User already exists" });
             }
 
-            var user = new ApplicationUser { UserName = registerRequest.Email, Email = registerRequest.Email };
+            var user = new ApplicationUser
+            {
+                UserName = registerRequest.Email,
+                Email = registerRequest.Email,
+                FirstName = registerRequest.FirstName,
+                LastName = registerRequest.LastName,
+                YearLevel = registerRequest.YearLevel,
+                Course = registerRequest.Course
+            };
             var result = await _userManager.CreateAsync(user, registerRequest.Password);
 
             if (result.Succeeded)
             {
-                return Ok(new { message = "User registered successfully" });
+                // Automatically log in the user
+                var token = GenerateJwtToken(user);
+                return Ok(new
+                {
+                    message = "User registered successfully",
+                    token,
+                    profile = new
+                    {
+                        user.FirstName,
+                        user.LastName,
+                        user.YearLevel,
+                        user.Course
+                    }
+                });
             }
 
             return BadRequest(new { message = "Registration failed", errors = result.Errors });
@@ -98,6 +119,10 @@ namespace StudyGroupFinder.Controllers
     {
         public string Email { get; set; }
         public string Password { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string YearLevel { get; set; }
+        public string Course { get; set; }
     }
 
     public class LoginRequest
