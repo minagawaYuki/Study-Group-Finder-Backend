@@ -228,6 +228,43 @@
   },
   {
     "ContainingType": "StudyGroupController",
+    "Method": "UpdateAnnouncement",
+    "RelativePath": "api/StudyGroup/announcements/{announcementId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "announcementId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "StudyGroupFinder.DTO.UpdateAnnouncementDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
+    "Method": "DeleteAnnouncement",
+    "RelativePath": "api/StudyGroup/announcements/{announcementId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "announcementId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "StudyGroupController",
     "Method": "PostComment",
     "RelativePath": "api/StudyGroup/announcements/{announcementId}/comments",
     "HttpMethod": "POST",

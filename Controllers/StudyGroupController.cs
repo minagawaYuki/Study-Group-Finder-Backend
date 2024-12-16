@@ -259,6 +259,50 @@ public class StudyGroupController : ControllerBase
         return Ok(announcement);
     }
 
+    [HttpPut("announcements/{announcementId}")]
+    public async Task<IActionResult> UpdateAnnouncement(int announcementId, [FromBody] UpdateAnnouncementDto dto)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var announcement = await _context.Announcements.FindAsync(announcementId);
+
+        if (announcement == null)
+            return NotFound(new { Message = "Announcement not found." });
+
+        if (announcement.CreatedByUserId != userId)
+            return Forbid();
+
+        announcement.Content = dto.Content;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Message = "Announcement updated successfully." });
+    }
+
+    // Delete an announcement
+    [HttpDelete("announcements/{announcementId}")]
+    public async Task<IActionResult> DeleteAnnouncement(int announcementId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        // Fetch the announcement and the related group
+        var announcement = await _context.Announcements
+            .Include(a => a.StudyGroup)
+            .FirstOrDefaultAsync(a => a.Id == announcementId);
+
+        if (announcement == null)
+            return NotFound(new { message = "Announcement not found." });
+
+        // Check if the user is the owner of the group
+        if (announcement.StudyGroup.CreatedByUserId != userId)
+            return StatusCode(StatusCodes.Status403Forbidden, new { message = "You are not authorized to delete this announcement." });
+
+        // Delete the announcement
+        _context.Announcements.Remove(announcement);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "Announcement deleted successfully." });
+    }
+
     // Endpoint to comment on an announcement (Members only)
     [HttpPost("announcements/{announcementId}/comments")]
     [Authorize]
