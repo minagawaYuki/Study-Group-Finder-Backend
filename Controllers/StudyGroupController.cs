@@ -44,11 +44,11 @@ public class StudyGroupController : ControllerBase
             .FirstOrDefaultAsync(g => g.Id == groupId);
 
         if (group == null)
-            return NotFound("Study group not found.");
+            return NotFound(new { message = "Study group not found." });
 
         // Check if the current user is the creator of the group
         if (group.CreatedByUserId != userId)
-            return Forbid("You are not authorized to delete this study group.");
+            return StatusCode(StatusCodes.Status403Forbidden, new { message = "You are not authorized to delete this study group." });
 
         // Remove the group
         _context.StudyGroups.Remove(group);
@@ -57,6 +57,30 @@ public class StudyGroupController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok(new { message = "Study group deleted successfully." });
+    }
+
+    // Edit Study Group
+    [HttpPut("{groupId}")]
+    public async Task<IActionResult> EditGroup(int groupId, [FromBody] StudyGroupDto editGroupDto)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        // Fetch the group and verify ownership
+        var group = await _context.StudyGroups.FirstOrDefaultAsync(g => g.Id == groupId);
+        if (group == null)
+            return NotFound("Group not found.");
+
+        if (group.CreatedByUserId != userId)
+            return Forbid(); // Forbid doesn't accept an anonymous object, so remove the custom message
+
+        // Update group properties
+        group.Name = editGroupDto.Name;
+        group.Description = editGroupDto.Description;
+        group.Subject = editGroupDto.Subject;
+        group.CourseCode = editGroupDto.CourseCode;
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Message = "Group updated successfully." });
     }
 
     [HttpGet("details/{groupId}")]
@@ -257,6 +281,50 @@ public class StudyGroupController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok(announcement);
+    }
+
+    [HttpPut("announcements/{announcementId}")]
+    public async Task<IActionResult> UpdateAnnouncement(int announcementId, [FromBody] UpdateAnnouncementDto dto)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var announcement = await _context.Announcements.FindAsync(announcementId);
+
+        if (announcement == null)
+            return NotFound(new { Message = "Announcement not found." });
+
+        if (announcement.CreatedByUserId != userId)
+            return Forbid();
+
+        announcement.Content = dto.Content;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new { Message = "Announcement updated successfully." });
+    }
+
+    // Delete an announcement
+    [HttpDelete("announcements/{announcementId}")]
+    public async Task<IActionResult> DeleteAnnouncement(int announcementId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        // Fetch the announcement and the related group
+        var announcement = await _context.Announcements
+            .Include(a => a.StudyGroup)
+            .FirstOrDefaultAsync(a => a.Id == announcementId);
+
+        if (announcement == null)
+            return NotFound(new { message = "Announcement not found." });
+
+        // Check if the user is the owner of the group
+        if (announcement.StudyGroup.CreatedByUserId != userId)
+            return StatusCode(StatusCodes.Status403Forbidden, new { message = "You are not authorized to delete this announcement." });
+
+        // Delete the announcement
+        _context.Announcements.Remove(announcement);
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "Announcement deleted successfully." });
     }
 
     // Endpoint to comment on an announcement (Members only)
