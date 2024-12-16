@@ -1,8 +1,12 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\wwwroot\\index.html",
+      "Id": "C:\\Users\\Charuzu\\OneDrive\\Documents\\3rd Year\\App Dev\\StudyGroupFinderBackend\\Study-Group-Finder-Backend\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.StudyGroupFinder.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.StudyGroupFinder.Microsoft.AspNetCore.StaticWebAssets.props",

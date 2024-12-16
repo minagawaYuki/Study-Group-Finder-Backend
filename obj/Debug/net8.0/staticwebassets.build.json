@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9HdSGjaePUiFOlGCP9P+WkVMekEdNkwmEuAEAmX20Xc=",
+  "Hash": "/Eo1kvMQrjc0+OVwcjcH+g5EI2xZrSBewOTpAlCVJH0=",
   "Source": "StudyGroupFinder",
   "BasePath": "_content/StudyGroupFinder",
   "Mode": "Default",
@@ -10,30 +10,116 @@
     {
       "Name": "StudyGroupFinder\\wwwroot",
       "Source": "StudyGroupFinder",
-      "ContentRoot": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Charuzu\\OneDrive\\Documents\\3rd Year\\App Dev\\StudyGroupFinderBackend\\Study-Group-Finder-Backend\\wwwroot\\",
       "BasePath": "_content/StudyGroupFinder",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\wwwroot\\index.html",
+      "Identity": "C:\\Users\\Charuzu\\OneDrive\\Documents\\3rd Year\\App Dev\\StudyGroupFinderBackend\\Study-Group-Finder-Backend\\wwwroot\\index.html",
       "SourceId": "StudyGroupFinder",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Mark\\source\\repos\\StudyGroupFinder\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Charuzu\\OneDrive\\Documents\\3rd Year\\App Dev\\StudyGroupFinderBackend\\Study-Group-Finder-Backend\\wwwroot\\",
       "BasePath": "_content/StudyGroupFinder",
-      "RelativePath": "index.html",
+      "RelativePath": "index#[.{fingerprint}]?.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "xyczysb328",
+      "Integrity": "lxGDJlnsZqrGeEqs0x2Dd2pE3pIWoNtWPOlDRGEwz24=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "index.html",
+      "AssetFile": "C:\\Users\\Charuzu\\OneDrive\\Documents\\3rd Year\\App Dev\\StudyGroupFinderBackend\\Study-Group-Finder-Backend\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5499"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lxGDJlnsZqrGeEqs0x2Dd2pE3pIWoNtWPOlDRGEwz24=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 10 Dec 2024 02:28:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lxGDJlnsZqrGeEqs0x2Dd2pE3pIWoNtWPOlDRGEwz24="
+        }
+      ]
+    },
+    {
+      "Route": "index.xyczysb328.html",
+      "AssetFile": "C:\\Users\\Charuzu\\OneDrive\\Documents\\3rd Year\\App Dev\\StudyGroupFinderBackend\\Study-Group-Finder-Backend\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5499"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lxGDJlnsZqrGeEqs0x2Dd2pE3pIWoNtWPOlDRGEwz24=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 10 Dec 2024 02:28:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xyczysb328"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lxGDJlnsZqrGeEqs0x2Dd2pE3pIWoNtWPOlDRGEwz24="
+        }
+      ]
     }
   ]
 }

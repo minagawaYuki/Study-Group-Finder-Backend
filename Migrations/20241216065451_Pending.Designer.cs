@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudyGroupFinder;
 
@@ -11,9 +12,11 @@ using StudyGroupFinder;
 namespace StudyGroupFinder.Migrations
 {
     [DbContext(typeof(StudyGroupFinderDbContext))]
-    partial class StudyGroupFinderDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241216065451_Pending")]
+    partial class Pending
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -320,16 +323,21 @@ namespace StudyGroupFinder.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("RequestedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("StudyGroupId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StudyGroupId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("PendingRequests");
                 });
@@ -637,7 +645,15 @@ namespace StudyGroupFinder.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("StudyGroupFinder.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("StudyGroup");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("StudyGroupFinder.Models.Product", b =>

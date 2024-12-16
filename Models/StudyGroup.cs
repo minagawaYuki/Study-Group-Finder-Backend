@@ -20,6 +20,8 @@ namespace StudyGroupFinder.Models
         public string? CreatedByUserId { get; set; }
         public ApplicationUser? CreatedBy { get; set; }
         public ICollection<GroupMember> Members { get; set; } = new List<GroupMember>();
+
+        public ICollection<PendingRequest> PendingRequests { get; set; }
     }
 
 }

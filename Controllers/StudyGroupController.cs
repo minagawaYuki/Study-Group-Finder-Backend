@@ -70,6 +70,58 @@ public class StudyGroupController : ControllerBase
         return Ok(group);
     }
 
+    // GET api/studygroup/{id}/members
+    [HttpGet("{id}/members")]
+    public async Task<IActionResult> GetGroupMembers(int id)
+    {
+        var studyGroup = await _context.StudyGroups
+            .Where(g => g.Id == id)
+            .Include(g => g.Members)
+            .ThenInclude(m => m.User) // Include the User (ApplicationUser)
+            .FirstOrDefaultAsync();
+
+        if (studyGroup == null)
+        {
+            return NotFound("Study group not found.");
+        }
+
+        var members = studyGroup.Members.Select(m => new
+        {
+            m.User.Id,
+            m.User.UserName
+        }).ToList();
+
+        return Ok(members);
+    }
+
+    [HttpDelete("{groupId}/members/{userId}")]
+    [Authorize]
+    public async Task<IActionResult> RemoveMember(int groupId, string userId)
+    {
+        var groupMember = await _context.GroupMembers
+            .FirstOrDefaultAsync(gm => gm.StudyGroupId == groupId && gm.UserId == userId);
+
+        if (groupMember == null)
+        {
+            return NotFound("Group member not found.");
+        }
+
+        // Ensure only the group owner can kick members
+        var group = await _context.StudyGroups.FirstOrDefaultAsync(g => g.Id == groupId);
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (group.CreatedByUserId != currentUserId)
+        {
+            return Forbid("Only the group owner can remove members.");
+        }
+
+        _context.GroupMembers.Remove(groupMember);
+        await _context.SaveChangesAsync();
+
+        return Ok("Member removed successfully.");
+    }
+
+
 
     [HttpPost("create")]
     public async Task<IActionResult> CreateGroup([FromBody] StudyGroupDto createDto)
@@ -122,8 +174,6 @@ public class StudyGroupController : ControllerBase
 
 
 
-
-
     [Authorize]
     [HttpPost("group/members/{groupId}")]
     public async Task<IActionResult> JoinGroup(int groupId)
@@ -139,6 +189,7 @@ public class StudyGroupController : ControllerBase
 
         return BadRequest(new { Message = "Failed to join the study group. The group might not exist, or you may already be a member." });
     }
+
 
     [Authorize]
     [HttpDelete("group/members/{groupId}")]
